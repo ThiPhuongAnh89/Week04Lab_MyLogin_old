@@ -35,6 +35,9 @@ public class LoginServlet extends HttpServlet {
       String passL;
       int total=0;
       int sum=0;
+       int max=0;
+       String maxUser;
+       String maxItem;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -136,11 +139,13 @@ public class LoginServlet extends HttpServlet {
            item = new String[4];
             while((line!= null))     
         {
-            userAllItems.add(item[0]);
-            allItems.add((item[2]));
-       //     priceAllItem.add(Integer.parseInt(item[3]);
+           
+            
             
              item = line.split(",");
+              userAllItems.add(item[0]);
+            allItems.add((item[2]));
+            priceAllItem.add(Integer.parseInt(item[3]));
             
              sum +=Integer.parseInt(item[3]);  
          //   System.out.println(sum);   
@@ -151,6 +156,7 @@ public class LoginServlet extends HttpServlet {
               line=br.readLine();
         }      
 
+           System.out.println(priceAllItem.get(0)); 
    // CHECK LOGIN USER AND PASS         
             if(userL.equals("") || passL.equals(""))
             {
@@ -158,11 +164,19 @@ public class LoginServlet extends HttpServlet {
                 getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             }
             if(userL.equals("admin") &&  passL.equals("password" )){
-                for(int i=0; i<item.length; i++){   
+                for(int i=0; i<priceAllItem.size(); i++){   
+                   
+                    if(max<priceAllItem.get(i)){
+                        max= priceAllItem.get(i);
+                        maxUser = userAllItems.get(i);
+                        maxItem = allItems.get(i);
+                    }
+                    
                 }
                 request.setAttribute("sum", sum);
-                request.setAttribute("max", "Invalid login");
-                request.setAttribute("name", "Invalid login");
+                request.setAttribute("max", max);
+                request.setAttribute("name", maxUser);
+                request.setAttribute("maxItem", maxItem);
                  getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
             }
             else
