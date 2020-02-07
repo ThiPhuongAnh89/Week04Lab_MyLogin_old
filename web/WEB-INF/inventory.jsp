@@ -26,14 +26,15 @@
                <option value = "living room">living room</option>
              </select>
           </p>
-          <div>Item name: <textarea name="item">${item}</textarea><br/></div>
-          <div>Price: $<textarea name="price">${price}</textarea></div>
+          <div>Item name: <input type="text"  name="item"><br/></div>
+          <div>Price: <input type="text" name="price"></div> <br/>
           <div><input type="submit" value="Add"> ${add}</div>
         </form>
         <br/>
         ${success}
         </br>
         Total value in inventory: $${totalL} </br>
+        </br>
          <a href="/Assignment1/login?submit">Logout</a>
     
         

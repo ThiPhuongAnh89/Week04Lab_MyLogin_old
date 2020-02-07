@@ -73,6 +73,7 @@ public class InventoryServlet extends HttpServlet {
     @Override
      protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+          HttpSession session = request.getSession();
      //   processRequest(request, response);
          String priceI = request.getParameter("price");
          String    itemI = request.getParameter("item");
@@ -80,6 +81,7 @@ public class InventoryServlet extends HttpServlet {
          if(priceI.equals("") || itemI .equals(""))
          {
             request.setAttribute("add", "Invalid Item. Please re-enter");
+             request.setAttribute("totalL", session.getAttribute("totalWrite"));
             getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
          }
          else
@@ -90,11 +92,13 @@ public class InventoryServlet extends HttpServlet {
              catch(NumberFormatException e)
              {
                request.setAttribute("add", "Invalid Item. Please re-enter");
+                request.setAttribute("totalL", session.getAttribute("totalWrite"));
                getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);  
              }
              if(price <=0 || price >10000)
              {
             request.setAttribute("add", "Invalid Item. Please re-enter");
+            request.setAttribute("totalL", session.getAttribute("totalWrite"));
             getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
              }
              else
@@ -103,7 +107,7 @@ public class InventoryServlet extends HttpServlet {
              }
 // WRITE THE NEW ITEM TO THE homeitems file             
              
-             HttpSession session = request.getSession();
+            
              session.setAttribute("category", request.getParameter("category"));
              session.setAttribute("item", request.getParameter("item"));
              session.setAttribute("price", request.getParameter("price"));
