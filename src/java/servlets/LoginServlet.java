@@ -27,17 +27,17 @@ public class LoginServlet extends HttpServlet {
       private List<String>   user = new ArrayList<>();
       private List<String>   pass = new ArrayList<>();
       private List<String>   homeitems = new ArrayList<>(); 
-       private List<String>   userAllItems = new ArrayList<>(); 
-        private List<String>   allItems = new ArrayList<>(); 
-         private List<Integer>   priceAllItem = new ArrayList<>(); 
-       String item[];
-      String userL;
-      String passL;
-      int total=0;
-      int sum=0;
-       int max=0;
-       String maxUser;
-       String maxItem;
+      private List<String>   userAllItems = new ArrayList<>(); 
+      private List<String>   allItems = new ArrayList<>(); 
+      private List<Integer>   priceAllItem = new ArrayList<>(); 
+     
+      String userLogin;
+      String passLogin;
+    
+      
+      int max=0;
+      String maxUser;
+      String maxItem;
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -90,17 +90,17 @@ public class LoginServlet extends HttpServlet {
             while((line = br.readLine())!= null)       
         {
             String userMember[] = new String[2];
-             userMember = line.split(",");
+            userMember = line.split(",");
             user.add(userMember[0]);
             pass.add(userMember[1]);
             System.out.println(user.get(0)); 
             System.out.println(pass.get(0)); 
              }
             
-             userL = request.getParameter("user");
-             passL = request.getParameter("pass");
-            System.out.println(userL); 
-            System.out.println(passL);
+             userLogin = request.getParameter("user");
+             passLogin = request.getParameter("pass");
+            System.out.println(userLogin); 
+            System.out.println(passLogin);
             
            
            
@@ -128,42 +128,43 @@ public class LoginServlet extends HttpServlet {
             throws ServletException, IOException {
             int total=0;
             int counter=0;
-            userL = request.getParameter("user");
-            passL = request.getParameter("pass");
+            int sum=0;
+             String item[];
+            userLogin = request.getParameter("user");
+            passLogin = request.getParameter("pass");
             HttpSession session = request.getSession();
             
             String path;
             path = getServletContext().getRealPath("/WEB-INF/homeitems.txt");
             BufferedReader br = new BufferedReader(new FileReader(new File(path)));
             String line = br.readLine();
-           item = new String[4];
+            item = new String[4];
             while((line!= null))     
         {
-           
             
-            
-             item = line.split(",");
-              userAllItems.add(item[0]);
+            item = line.split(",");
+            userAllItems.add(item[0]);
             allItems.add((item[2]));
             priceAllItem.add(Integer.parseInt(item[3]));
             
              sum +=Integer.parseInt(item[3]);  
+             
          //   System.out.println(sum);   
-             if(userL.equals(item[0]))
+             if(userLogin.equals(item[0]))
                 {       
                   total +=Integer.parseInt(item[3]);
                 }
               line=br.readLine();
         }      
-
-           System.out.println(priceAllItem.get(0)); 
+            
+           
    // CHECK LOGIN USER AND PASS         
-            if(userL.equals("") || passL.equals(""))
+            if(userLogin.equals("") || passLogin.equals(""))
             {
                 request.setAttribute("message", "Invalid login");
                 getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             }
-            if(userL.equals("admin") &&  passL.equals("password" )){
+            if(userLogin.equals("admin") &&  passLogin.equals("password" )){
                 for(int i=0; i<priceAllItem.size(); i++){   
                    
                     if(max<priceAllItem.get(i)){
@@ -171,20 +172,23 @@ public class LoginServlet extends HttpServlet {
                         maxUser = userAllItems.get(i);
                         maxItem = allItems.get(i);
                     }
-                    
+                //    sum +=priceAllItem.get(i);
                 }
-                request.setAttribute("sum", sum);
+                System.out.println(sum); 
+                request.setAttribute("sumAdmin", sum);
+               
                 request.setAttribute("max", max);
                 request.setAttribute("name", maxUser);
                 request.setAttribute("maxItem", maxItem);
                  getServletContext().getRequestDispatcher("/WEB-INF/admin.jsp").forward(request, response);
+                
             }
             else
             {    
             for(int i=0; i<user.size();i++){
                
-            if(userL.equals(user.get(i)) &&  passL.equals(pass.get(i) )) {
-             session.setAttribute("useName", userL);
+            if(userLogin.equals(user.get(i)) &&  passLogin.equals(pass.get(i) )) {
+             session.setAttribute("useName", userLogin);
                String userNameS =   (String)session.getAttribute("useName");
                request.setAttribute("mess", userNameS);  
                  
@@ -206,14 +210,7 @@ public class LoginServlet extends HttpServlet {
             }
             
             }
-            
-            
          
-            
-            
-             
-            
-            
     }
     /**
      * Returns a short description of the servlet.
