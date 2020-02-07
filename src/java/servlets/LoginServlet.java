@@ -27,6 +27,9 @@ public class LoginServlet extends HttpServlet {
       private List<String>   user = new ArrayList<>();
       private List<String>   pass = new ArrayList<>();
       private List<String>   homeitems = new ArrayList<>(); 
+       private List<String>   userAllItems = new ArrayList<>(); 
+        private List<String>   allItems = new ArrayList<>(); 
+         private List<Integer>   priceAllItem = new ArrayList<>(); 
        String item[];
       String userL;
       String passL;
@@ -96,8 +99,7 @@ public class LoginServlet extends HttpServlet {
             System.out.println(userL); 
             System.out.println(passL);
             
-            
-            
+           
            
         }
         else
@@ -134,15 +136,16 @@ public class LoginServlet extends HttpServlet {
            item = new String[4];
             while((line!= null))     
         {
+            userAllItems.add(item[0]);
+            allItems.add((item[2]));
+       //     priceAllItem.add(Integer.parseInt(item[3]);
+            
              item = line.split(",");
             
-             sum +=Integer.parseInt(item[3]);
-              
-            System.out.println(sum);
-             
+             sum +=Integer.parseInt(item[3]);  
+         //   System.out.println(sum);   
              if(userL.equals(item[0]))
-                {
-                    
+                {       
                   total +=Integer.parseInt(item[3]);
                 }
               line=br.readLine();
@@ -155,8 +158,7 @@ public class LoginServlet extends HttpServlet {
                 getServletContext().getRequestDispatcher("/WEB-INF/login.jsp").forward(request, response);
             }
             if(userL.equals("admin") &&  passL.equals("password" )){
-                for(int i=0; i<item.length; i++){
-                  
+                for(int i=0; i<item.length; i++){   
                 }
                 request.setAttribute("sum", sum);
                 request.setAttribute("max", "Invalid login");
@@ -172,9 +174,6 @@ public class LoginServlet extends HttpServlet {
                String userNameS =   (String)session.getAttribute("useName");
                request.setAttribute("mess", userNameS);  
                  
-            
-           
-             
               session.setAttribute("totalWrite", total);
               request.setAttribute("totalL", session.getAttribute("totalWrite"));
             getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
@@ -195,7 +194,7 @@ public class LoginServlet extends HttpServlet {
             }
             
             
-            
+         
             
             
              

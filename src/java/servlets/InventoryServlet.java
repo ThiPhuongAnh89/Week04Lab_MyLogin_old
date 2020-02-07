@@ -101,10 +101,10 @@ public class InventoryServlet extends HttpServlet {
              {
                  
              }
-             
+// WRITE THE NEW ITEM TO THE homeitems file             
              
              HttpSession session = request.getSession();
-              session.setAttribute("category", request.getParameter("category"));
+             session.setAttribute("category", request.getParameter("category"));
              session.setAttribute("item", request.getParameter("item"));
              session.setAttribute("price", request.getParameter("price"));
              
@@ -128,18 +128,17 @@ public class InventoryServlet extends HttpServlet {
 //             String itemAdd = request.getParameter("item");
 //             String priceAdd = request.getParameter("price");
             PrintWriter pw = new PrintWriter(new BufferedWriter(new FileWriter(path, true))); 
-            //pw.println(userName);
-            pw.println(category);
-            pw.println(item);
-            pw.println(priceS);
+             pw.print(userNameS);
+             pw.print(",");
+             pw.print(category);
+             pw.print(",");
+             pw.print(item);
+             pw.print(",");
+             pw.println(priceS);
             int totalPrint = totalAd +priceS;
             session.setAttribute("totalL", totalPrint);
-            
             request.setAttribute("totalL", session.getAttribute("totalL"));
-            
             pw.close();
-           
-            
              
       getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
     }

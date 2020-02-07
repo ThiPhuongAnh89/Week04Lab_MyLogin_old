@@ -20,10 +20,10 @@
             <p>
              <label>Category: </label>
              <select id = "category" name="category"> 
-               <option value = "1">bedroom</option>
-               <option value = "2">garage</option>
-               <option value = "3">kitchen</option>
-               <option value = "4">living room</option>
+               <option value = "bedroom">bedroom</option>
+               <option value = "garage">garage</option>
+               <option value = "kitchen">kitchen</option>
+               <option value = "living room">living room</option>
              </select>
           </p>
           <div>Item name: <textarea name="item">${item}</textarea><br/></div>
