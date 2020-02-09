@@ -104,7 +104,7 @@ public class InventoryServlet extends HttpServlet {
              else
              {
                  
-             }
+             
 // WRITE THE NEW ITEM TO THE homeitems file             
              
             
@@ -145,6 +145,7 @@ public class InventoryServlet extends HttpServlet {
             pw.close();
              
       getServletContext().getRequestDispatcher("/WEB-INF/inventory.jsp").forward(request, response);
+             }
     }
     }
     /**

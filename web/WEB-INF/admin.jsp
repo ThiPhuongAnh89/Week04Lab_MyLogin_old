@@ -14,7 +14,7 @@
     <body>
        <h1>Home Inventory</h1>
        <h2>Admin Summary</h2>
-       Total value for all users: $${sum}. Most expensive item is ${maxItem} at $${max} owned by ${name}.
+       Total value for all users: $${sumAdmin}. Most expensive item is ${maxItem} at $${max} owned by ${name}.
        </br>
        </br>
           <a href="/Assignment1/login?submit">Logout</a>

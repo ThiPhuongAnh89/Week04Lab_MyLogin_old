@@ -176,7 +176,6 @@ public class LoginServlet extends HttpServlet {
                 }
                 System.out.println(sum); 
                 request.setAttribute("sumAdmin", sum);
-               
                 request.setAttribute("max", max);
                 request.setAttribute("name", maxUser);
                 request.setAttribute("maxItem", maxItem);
